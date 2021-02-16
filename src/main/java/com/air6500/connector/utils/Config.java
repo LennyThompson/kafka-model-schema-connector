@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Config
 {
@@ -42,6 +44,11 @@ public class Config
     public String getConsumerGroup()
     {
         return m_strConsumerGroup;
+    }
+
+    public String getBootstrapsString()
+    {
+        return Arrays.stream(m_listBootstraps).collect(Collectors.joining(","));
     }
 
     public static Config init(String strConfigPath)

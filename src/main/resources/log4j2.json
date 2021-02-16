@@ -1,0 +1,71 @@
+{
+  "configuration": {
+    "name": "Default",
+    "properties": {
+      "property": [
+        {
+          "name": "app-name",
+          "value": "kafka-connector"
+        },
+        {
+          "name": "log-path",
+          "value": "logs"
+        },
+        {
+          "name": "archive",
+          "value": "${log-path}/archive"
+        }
+      ]
+    },
+    "appenders": {
+      "Console": {
+        "name": "Console-Appender",
+        "target": "SYSTEM_OUT",
+        "PatternLayout": {
+          "pattern": "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        }
+      },
+      "RollingFile": {
+        "name": "RollingFile-Appender",
+        "fileName": "${log-path}/${app-name}.log",
+        "filePattern": "${archive}/${app-name}.log.%d{yyyy-MM-dd-hh-mm}.gz",
+        "PatternLayout": {
+          "pattern": "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        },
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "1 MB"
+          }
+        },
+        "DefaultRolloverStrategy": {
+          "max": "30"
+        }
+      }
+    },
+    "loggers": {
+      "logger": {
+        "name": "com.air6500.connector",
+        "level": "debug",
+        "appender-ref": [
+          {
+            "ref": "RollingFile-Appender",
+            "level": "debug"
+          }
+        ]
+      },
+      "root": {
+        "level": "debug",
+        "appender-ref": [
+          {
+            "ref": "Console-Appender"
+          },
+          {
+            "ref": "RollingFile-Appender",
+            "level": "debug"
+          }
+        ]
+      }
+    }
+  }
+}
+

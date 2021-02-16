@@ -1,0 +1,5 @@
+{
+  "bootstraps": ["localhost:9092"],
+  "topic": "test-entity-java-producer",
+  "consumer-group": "test-entity-java-consumer"
+}
