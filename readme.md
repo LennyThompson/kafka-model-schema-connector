@@ -4,7 +4,7 @@ Simple producer/consumer pair for kafka tests.
 
 ## Producer
 
-The *com.air6500.connector.producer.Main* will simply generate random *EntityMessage* messages into the kafka topic defined in the config.
+The *com.air6500.connector.Main* will simply generate random *EntityMessage* messages into the kafka topic defined in the config.
 
 # Consumer
 

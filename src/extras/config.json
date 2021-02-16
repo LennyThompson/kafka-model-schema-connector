@@ -1,5 +1,6 @@
 {
-  "bootstraps": ["localhost:9092"],
+  "type": "producer",
+  "bootstraps": ["localhost:19092"],
   "topic": "test-entity-java-producer",
   "producer-rate": 500
 }
