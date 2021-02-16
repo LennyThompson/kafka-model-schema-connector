@@ -134,3 +134,9 @@ And for non docerised instances, use
 ```
 
 Keep in mind that the naming must be consistent between the docker-compose'd configurations (ie network name, broker name and ports).
+
+### Little Cat Z
+
+Now he has the good stuff under his hat!
+
+Dont forget the _:z_ after the volume mapping to get the mapped folders ownership aligned...
