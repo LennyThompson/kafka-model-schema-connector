@@ -10,7 +10,7 @@ services:
     volumes:
       - "./target:/home/app:z"
       - "./logs:/logs:z"
-    command: ['java', '-jar', '/home/app/kafka-model-schema-connector-1.0-SNAPSHOT-jar-with-dependencies.jar', '--config', '/home/app/config.json']
+    command: ['java', '-jar', "-Dapp.name=kafka.producer", '/home/app/kafka-model-schema-connector-1.0-SNAPSHOT-jar-with-dependencies.jar', '--config', '/home/app/config.json']
 
 networks: 
   default:
