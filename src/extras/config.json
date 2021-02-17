@@ -1,6 +1,6 @@
 {
   "type": "producer",
-  "bootstraps": ["localhost:19092"],
+  "bootstraps": ["a6500d01.bal.au.boeing.com:9091", "a6500d01.bal.au.boeing.com:9092", "a6500d01.bal.au.boeing.com:9093"],
   "topic": "test-entity-java-producer",
   "producer-rate": 500
 }

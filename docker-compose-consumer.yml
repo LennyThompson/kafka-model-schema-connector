@@ -1,12 +1,12 @@
 version: "3.3"
 
 services:
-  kafka-producer:
+  kafka-consumer:
     image: openjdk:14
-    container_name: "com.air6500.kafka.producer"
+    container_name: "com.air6500.kafka.consumer"
     #restart: always
     ports:
-      - 8091:8091
+      - 8092:8092
     volumes:
       - "./target:/home/app:z"
       - "./logs:/logs:z"
