@@ -33,6 +33,7 @@ public class Main
 
     public static void main(String[] args) throws InterruptedException
     {
+        LOGGER.info(System.getProperty("app.name"));
         LOGGER.info("**** Running as kafka producer ****");
         LOGGER.info("Arg count: " + args.length + ", Args = " + Arrays.stream(args).collect(Collectors.joining(" ")));
         Options options = new Options().addOption("c", "config", true, "Path to config json file");
