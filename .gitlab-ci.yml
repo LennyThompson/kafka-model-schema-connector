@@ -12,6 +12,6 @@ build:
     paths:
       - target/kafka-model-schema-connector-1.0-SNAPSHOT-jar-with-depedencies.jar
   script:
-    - mvn dependency:get -Dartifact=org.air6500:kafka-model-schema-java:1.0-SNAPSHOT -Dmaven.wagon.http.ssl.insecure=true
+    - mvn dependency:get -Dartifact=org.air6500:kafka-model-schema-java:1.0-SNAPSHOT $MAVEN_CLI_OPTS -Dmaven.wagon.http.ssl.insecure=true
     - mvn $MAVEN_CLI_OPTS package
 
