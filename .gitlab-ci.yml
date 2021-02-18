@@ -16,4 +16,7 @@ build:
   script:
     #- mvn dependency:get -Dartifact=org.air6500:kafka-model-schema-java:1.0-SNAPSHOT $MAVEN_CLI_OPTS -Dmaven.wagon.http.ssl.insecure=true
     - mvn $MAVEN_CLI_OPTS -Dmaven.wagon.http.ssl.insecure=true package
+    - docker build -t java-producer-image -f Dockerfile.producer .
+    - docker build -t java-consumer-image -f Dockerfile.consumer .
+
 

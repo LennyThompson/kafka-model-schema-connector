@@ -1,0 +1,6 @@
+FROM openjdk:14
+
+COPY ./target/kafka-model-schema-connector-1.0-SNAPSHOT-jar-with-dependencies.jar /home/app/producer.jar
+COPY ./target/config.json /home/app/config.json
+
+ENTRYPOINT ["java", "-jar", "-Dapp.name=kafka.producer", "/home/app/producer.jar", "--config", "/home/app/config.json"]

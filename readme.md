@@ -51,6 +51,14 @@ TODO - add config for logging level.
 
 ## Docker
 
+It turns out that docker-compose is not such a good solution for this exercise, namely as the target is a gitlab CI/CD build resulting in a producer and consumer running in docker alongside the kafka cluster...
+
+So it is better to burn the app and config into a docker image and run this directly on the target server (through gitlab).
+
+So the producer and consumer Dockerfiles have been added which simply take the base openjdk:14 image and add the app and config, then make these the entrypoint for running the container.
+
+### And for posterity the docker-compose notes...
+
 Add a docker-compose to dockerise the packaged build running as either a producer or consumer.
 
 This meant adjusting the docker settings for at least my local kafka environment.
