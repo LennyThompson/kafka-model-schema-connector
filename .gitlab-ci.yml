@@ -26,8 +26,8 @@ build:
 deploy:
   image: docker:stable
   stage: deploy
-  #services:
-  #  - docker:stable-dind
+  services:
+    - docker:stable-dind
   script:
       - docker build -t 'java-producer-image' -f Dockerfile.producer .
       - docker build -t 'java-consumer-image' -f Dockerfile.consumer .
