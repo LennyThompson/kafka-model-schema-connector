@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 variables:
   #TAG_PRODUCER: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:producer
@@ -40,6 +41,35 @@ build_docker:
       - echo $TAG_LATEST
       - docker push $TAG_PRODUCER
       - docker push $TAG_CONSUMER
+
+Deploy_producer:
+  image: a6500d02.bal.au.boeing.com:5050/riskreduction/example-project/alpine:keene
+  stage: deploy
+  script:
+    - chmod og= $ID_RSA_D01
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker pull $TAG_PRODUCER"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker container rm -f producer || true"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --label --log-driver json-file --log-opt max-size=10m --name producer $TAG_PRODUCER"
+     #sleep 15 then check if its up show last log
+    - sleep 15
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker ps -a | grep producer ; docker logs producer --tail 100 || true"
+
+Deploy_consumer:
+  image: a6500d02.bal.au.boeing.com:5050/riskreduction/example-project/alpine:keene
+  stage: deploy
+  script:
+    - chmod og= $ID_RSA_D01
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker pull $TAG_CONSUMER"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker container rm -f consumer || true"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --label --log-driver json-file --log-opt max-size=10m --name consumer $TAG_CONSUMER"
+     #sleep 15 then check if its up show last log
+    - sleep 15
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker ps -a | grep consumer ; docker logs consumer --tail 100 || true"
+
+    
+  
 
 
 
