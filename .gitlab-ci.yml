@@ -32,6 +32,7 @@ deploy:
       - docker build -t javaproducerimage -f Dockerfile.producer .
       - docker build -t javaconsumerimage -f Dockerfile.consumer .
       - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+      - echo $TAG_LATEST
       - docker push javaproducerimage
       - docker push javaconsumerimage
 
