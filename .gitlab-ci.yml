@@ -24,12 +24,17 @@ build:
     - mvn $MAVEN_CLI_OPTS -Dmaven.wagon.http.ssl.insecure=true package
 
 deploy:
-  image: a6500d02.bal.au.boeing.com:5050/riskreduction/example-project/docker
-  stage:
-    - deploy
+  image: docker:stable
+  stage: deploy
+  #services:
+  #  - docker:stable-dind
   script:
       - docker build -t java-producer-image -f Dockerfile.producer .
       - docker build -t java-consumer-image -f Dockerfile.consumer .
+      - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+      - docker push java-producer-image
+      - docker push java-consumer-image
+
 
 
 
