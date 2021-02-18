@@ -29,11 +29,11 @@ deploy:
   services:
     - docker:stable-dind
   script:
-      - docker build -t 'java-producer-image' -f Dockerfile.producer .
-      - docker build -t 'java-consumer-image' -f Dockerfile.consumer .
+      - docker build -t javaproducerimage -f Dockerfile.producer .
+      - docker build -t javaconsumerimage -f Dockerfile.consumer .
       - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-      - docker push 'java-producer-image'
-      - docker push 'java-consumer-image'
+      - docker push javaproducerimage
+      - docker push javaconsumerimage
 
 
 
