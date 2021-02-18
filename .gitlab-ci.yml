@@ -1,6 +1,6 @@
 stages:
-  - build_maven
-  - build_docker
+  - build
+  - test
 
 variables:
   #TAG_PRODUCER: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:producer
