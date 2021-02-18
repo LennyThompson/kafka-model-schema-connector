@@ -50,7 +50,7 @@ Deploy_producer:
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker pull $TAG_PRODUCER"
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker container rm -f producer || true"
-    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --label --log-driver json-file --log-opt max-size=10m --name producer $TAG_PRODUCER"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --log-driver json-file --log-opt max-size=10m --name producer $TAG_PRODUCER"
      #sleep 15 then check if its up show last log
     - sleep 15
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker ps -a | grep producer ; docker logs producer --tail 100 || true"
@@ -63,7 +63,7 @@ Deploy_consumer:
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker pull $TAG_CONSUMER"
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker container rm -f consumer || true"
-    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --label --log-driver json-file --log-opt max-size=10m --name consumer $TAG_CONSUMER"
+    - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker run --rm -d --label co.elastic.logs=true --log-driver json-file --log-opt max-size=10m --name consumer $TAG_CONSUMER"
      #sleep 15 then check if its up show last log
     - sleep 15
     - ssh -i $ID_RSA_D01 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP_D01 "docker ps -a | grep consumer ; docker logs consumer --tail 100 || true"
