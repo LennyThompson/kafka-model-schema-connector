@@ -7,10 +7,21 @@ services:
     #restart: always
     ports:
       - 8092:8092
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
+        max-file: "3"
+    labels:
+      - "co.elastic.logs=true"
     volumes:
-      - "./target:/home/app:z"
-      - "./logs:/logs:z"
+      - "kafka-comsumer-data:/home/app:z"
+      #- "./logs:/logs:z"
     command: ['java', '-jar', "-Dapp.name=kafka.consumer", '/home/app/kafka-model-schema-connector-1.0-SNAPSHOT-jar-with-dependencies.jar', '--config', '/home/app/consumer-config.json']
+
+volumes: 
+  kafka-comsumer-data:
+    driver: local
 
 # networks: 
 #   default:
