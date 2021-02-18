@@ -1,6 +1,11 @@
 stages:
-  - build
-  - deploy
+  - build_maven
+  - build_docker
+
+variables:
+  #TAG_PRODUCER: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:producer
+  TAG_CONSUMER: $CI_REGISTRY_IMAGE/consumer:latest
+  TAG_PRODUCER: $CI_REGISTRY_IMAGE/producer:latest
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}   
@@ -9,7 +14,7 @@ cache:
     - target/*.jar
     - target/*.json
 
-build:
+build_maven:
   image: maven:latest 
   variables:   
     MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
@@ -23,18 +28,18 @@ build:
   script:
     - mvn $MAVEN_CLI_OPTS -Dmaven.wagon.http.ssl.insecure=true package
 
-deploy:
+build_docker:
   image: docker:stable
-  stage: deploy
+  stage: test
   services:
     - docker:stable-dind
   script:
-      - docker build -t javaproducerimage -f Dockerfile.producer .
-      - docker build -t javaconsumerimage -f Dockerfile.consumer .
+      - docker build -t $TAG_PRODUCER -f Dockerfile.producer .
+      - docker build -t $TAG_CONSUMER -f Dockerfile.consumer .
       - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
       - echo $TAG_LATEST
-      - docker push javaproducerimage
-      - docker push javaconsumerimage
+      - docker push $TAG_PRODUCER
+      - docker push $TAG_CONSUMER
 
 
 
